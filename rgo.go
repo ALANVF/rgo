@@ -7,6 +7,7 @@ package rgo
 #cgo LDFLAGS: -lm -lR
 
 #include <stdlib.h>
+
 #include <R.h>
 #include <Rembedded.h>
 #include <Rinternals.h>
@@ -118,73 +119,153 @@ func NewSEXP(value interface{}) *SEXP {
 }
 
 func (this *SEXP) IsNull() bool {
-	if int(C.Rf_isNull(this.Raw)) == 1 {
-		return true
-	} else {
-		return false
-	}
+	return int(C.Rf_isNull(this.Raw)) == 1
 }
 
 func (this *SEXP) IsSymbol() bool {
-	if int(C.Rf_isSymbol(this.Raw)) == 1 {
-		return true
-	} else {
-		return false
-	}
+	return int(C.Rf_isSymbol(this.Raw)) == 1
 }
 
 func (this *SEXP) IsLogical() bool {
-	if int(C.Rf_isLogical(this.Raw)) == 1 {
-		return true
-	} else {
-		return false
-	}
+	return int(C.Rf_isLogical(this.Raw)) == 1
 }
 
 func (this *SEXP) IsReal() bool {
-	if int(C.Rf_isReal(this.Raw)) == 1 {
-		return true
-	} else {
-		return false
-	}
+	return int(C.Rf_isReal(this.Raw)) == 1
 }
 
 func (this *SEXP) IsComplex() bool {
-	if int(C.Rf_isComplex(this.Raw)) == 1 {
-		return true
-	} else {
-		return false
-	}
+	return int(C.Rf_isComplex(this.Raw)) == 1
 }
 
 func (this *SEXP) IsExpression() bool {
-	if int(C.Rf_isExpression(this.Raw)) == 1 {
-		return true
-	} else {
-		return false
-	}
+	return int(C.Rf_isExpression(this.Raw)) == 1
 }
 
 func (this *SEXP) IsEnvironment() bool {
-	if int(C.Rf_isEnvironment(this.Raw)) == 1 {
-		return true
-	} else {
-		return false
-	}
+	return int(C.Rf_isEnvironment(this.Raw)) == 1
 }
 
 func (this *SEXP) IsString() bool {
-	if int(C.Rf_isString(this.Raw)) == 1 {
-		return true
-	} else {
-		return false
-	}
+	return int(C.Rf_isString(this.Raw)) == 1
 }
 
 func (this *SEXP) IsObject() bool {
-	if int(C.Rf_isObject(this.Raw)) == 1 {
-		return true
-	} else {
-		return false
-	}
+	return int(C.Rf_isObject(this.Raw)) == 1
+}
+
+func (this *SEXP) IsArray() bool {
+    return int(C.Rf_isArray(this.Raw)) == 1
+}
+
+func (this *SEXP) IsFactor() bool {
+    return int(C.Rf_isFactor(this.Raw)) == 1
+}
+
+func (this *SEXP) IsFrame() bool {
+    return int(C.Rf_isFrame(this.Raw)) == 1
+}
+
+func (this *SEXP) IsFunction() bool {
+    return int(C.Rf_isFunction(this.Raw)) == 1
+}
+
+func (this *SEXP) IsInteger() bool {
+    return int(C.Rf_isInteger(this.Raw)) == 1
+}
+
+func (this *SEXP) IsLanguage() bool {
+    return int(C.Rf_isLanguage(this.Raw)) == 1
+}
+
+func (this *SEXP) IsList() bool {
+    return int(C.Rf_isList(this.Raw)) == 1
+}
+
+func (this *SEXP) IsMatrix() bool {
+    return int(C.Rf_isMatrix(this.Raw)) == 1
+}
+
+func (this *SEXP) IsNewList() bool {
+    return int(C.Rf_isNewList(this.Raw)) == 1
+}
+
+func (this *SEXP) IsNumber() bool {
+    return int(C.Rf_isNumber(this.Raw)) == 1
+}
+
+func (this *SEXP) IsNumeric() bool {
+    return int(C.Rf_isNumeric(this.Raw)) == 1
+}
+
+func (this *SEXP) IsPairList() bool {
+    return int(C.Rf_isPairList(this.Raw)) == 1
+}
+
+func (this *SEXP) IsPrimitive() bool {
+    return int(C.Rf_isPrimitive(this.Raw)) == 1
+}
+
+func (this *SEXP) IsTs() bool {
+    return int(C.Rf_isTs(this.Raw)) == 1
+}
+
+func (this *SEXP) IsUserBinop() bool {
+    return int(C.Rf_isUserBinop(this.Raw)) == 1
+}
+
+func (this *SEXP) IsValidString() bool {
+    return int(C.Rf_isValidString(this.Raw)) == 1
+}
+
+func (this *SEXP) IsValidStringF() bool {
+    return int(C.Rf_isValidStringF(this.Raw)) == 1
+}
+
+func (this *SEXP) IsVector() bool {
+    return int(C.Rf_isVector(this.Raw)) == 1
+}
+
+func (this *SEXP) IsVectorAtomic() bool {
+    return int(C.Rf_isVectorAtomic(this.Raw)) == 1
+}
+
+func (this *SEXP) IsVectorList() bool {
+    return int(C.Rf_isVectorList(this.Raw)) == 1
+}
+
+func (this *SEXP) IsVectorizable() bool {
+    return int(C.Rf_isVectorizable(this.Raw)) == 1
+}
+
+
+
+func (this *SEXP) Bool() bool {
+	return int(C.Rf_asLogical(this.Raw)) != 0
+}
+
+func (this *SEXP) Int() int {
+	return int(C.Rf_asInteger(this.Raw))
+}
+
+func (this *SEXP) Byte() byte {
+	return byte(*C.RAW(this.Raw))
+}
+
+func (this *SEXP) Float32() float32 {
+	return float32(C.Rf_asReal(this.Raw))
+}
+
+func (this *SEXP) Float64() float64 {
+	return float64(C.Rf_asReal(this.Raw))
+}
+
+func (this *SEXP) Complex64() complex64 {
+	cmplx := C.Rf_asComplex(this.Raw)
+	return complex64(complex(float64(cmplx.r), float64(cmplx.i)))
+}
+
+func (this *SEXP) Complex128() complex128 {
+	cmplx := C.Rf_asComplex(this.Raw)
+	return complex(float64(cmplx.r), float64(cmplx.i))
 }
