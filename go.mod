@@ -1,3 +1,3 @@
-module github.com/ALANFV/rgo
+module github.com/ALANVF/rgo
 
 go 1.14
